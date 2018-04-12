@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>Calories</title>
+    <link rel="stylesheet" href="{% static "bootstrap.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "bootstrap-theme.min.css" %}">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script type="text/javascript" src="{% static "jquery-git.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "jquery-ui.min.js" %}"></script>
+    <link rel="stylesheet" href="{% static "jquery-ui.min.css" %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static "login.css" %}">
+    <script src="{% static "bootstrap.min.js" %}"></script>
+    <style>
+        .ui-autocomplete {
+            position: absolute;
+            border-radius: 3px;
+            top: 0;
+            left: 0;
+            cursor: default;
+            min-width: 100px;
+            max-width: 100%;
+            max-height: 100px;
+            background: #ffffff;
+            color: #000000;
+            z-index: 9999999 !important;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body onload="onLoad()">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" style="color: #2b542c;" href="#">Traffic Accidents Data</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a id="invite_button" class="page-scroll" style="color: black;" href="#"></a>
+                </li>
+                <li>
+                    <a id="daily_button" class="page-scroll" style="color: red;" href="#">...</a>
+                </li>
+                <li>
+                    <a id="login_button" class="page-scroll" data-toggle="modal" data-target="#myModal"
+                       style="color: #2b542c; visibility: hidden" href="#">Login</a>
+                </li>
+                <li>
+                    <a id="logout_button" class="page-scroll" onclick="logout()"
+                       style="color: #2b542c; visibility: hidden" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 80px; margin-left: 5%; margin-right: 5%; zoom: 0.7">
+    <li role="presentation" class="active"><a href="#accidents" aria-controls="accidents" role="tab" data-toggle="tab">Accidents</a>
+    </li>
+    <li role="presentation"><a href="#profiles" aria-controls="profiles" role="tab" data-toggle="tab">Users</a></li>
+    </li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="accidents">
+        <div style="margin-left: 5%; margin-right: 5%; margin-top: 10px">
+            <form id="filter_form" style="zoom: 0.7">
+                <div class="input-group">
+                    <input type="text" id="filter_text" onchange="load_all()" class="form-control" placeholder="Search">
+                    <span class="input-group-addon">Date</span>
+                    <input type="date" id="filter_date_from" onchange="load_all()" class="form-control">
+                    <input type="date" id="filter_date_to" onchange="load_all()" class="form-control">
+                    <span class="input-group-addon">Time</span>
+                    <input type="time" id="filter_time_from" onchange="load_all()" class="form-control">
+                    <input type="time" id="filter_time_to" onchange="load_all()" class="form-control">
+                </div>
+            </form>
+            <div id="result" style="height: 370px; overflow-y: scroll;">Accidents not loaded</div>
+
+        </div>
+        <div style="margin-left: 5%; margin-right: 5%; margin-top: 20px; margin-bottom: 40px">
+            <form name="form_new_accident" id="form_new_accident">
+                <div id="new_errors" style="margin-bottom: 10px; text-align: center; color: red"></div>
+                <div class="input-group">
+                    <input type="text" name="new_text" id="new_description" class="form-control" placeholder="New Accident">
+                    <span class="input-group-addon"> </span>
+                    <input type="date" name="new_date" id="new_date" class="form-control"
+                           value="{{ today|date:"Y-m-d" }}">
+                    <span class="input-group-addon">-</span>
+                    <input type="time" name="new_time" id="new_time" class="form-control"
+                           value="{{ today|date:"H:i" }}">
+                    <span class="input-group-addon"> </span>
+                    <input type="number" id="new_injured" class="form-control"
+                           placeholder="Injured">
+                    <span class="input-group-addon"> </span>
+                    <input type="number" id="new_killed" class="form-control"
+                           placeholder="Killed">
+                    <span class="input-group-addon"> </span>
+                    <input type="text" id="new_violation" class="form-control"
+                           placeholder="Violation">
+                    <span class="input-group-addon"> </span>
+                    <input type="submit" class="form-control" name="submit_new_accident" id="submit_new_accident" value="Add">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profiles">
+        <div id="users_div" style="margin-left: 5%; margin-right: 5%; height: 450px; overflow-y: scroll;">Users not
+            loaded
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+        var availableTags = [
+            {% for item in autocomplete %}"{{ item }}",{% endfor %}
+        ];
+</script>
+<script src="{% static "allscripts.js" %}"></script>
+<script src="{% static "accidents.js" %}"></script>
+<script src="{% static "users.js" %}"></script>
+
+</body>
+</html>

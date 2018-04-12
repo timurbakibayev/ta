@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email verification</title>
+</head>
+<body onload="onLoad()">
+    Dear {{ user.username }}!<br><br>
+    {{ message }}<br><br>
+    {% if token %}
+    You are automatically signed in. <a href="/index">Continue...</a><br><br>
+    {% endif %}
+    Best regards,<br>
+    Calories team.
+    <script language="JavaScript">
+        function onLoad() {
+            localStorage.setItem('token', '{{ token }}');
+	        localStorage.setItem('username', '{{ user.username }}');
+        }
+    </script>
+</body>
+</html>
