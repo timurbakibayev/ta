@@ -28,7 +28,8 @@ function newAccident() {
         date: dateElement.value,
         time: timeElement.value,
         injured: injuredElement.value,
-        killed: killedElement.value
+        killed: killedElement.value,
+        violation_code: violationElement.value
     });
     console.log("Sending", sendObject);
     xhr.send(sendObject);
@@ -142,7 +143,7 @@ function getAccidents() {
                 r[++j] = '<td>' + data[key]["injured"] + "</td>";
                 r[++j] = '<td>' + data[key]["killed"] + "</td>";
                 r[++j] = '<td>' + data[key]["alcohol"] + "</td>";
-                r[++j] = '<td>' + data[key]["violation"] + "</td>";
+                r[++j] = '<td>' + data[key]["violation_code"] + "</td>";
                 // r[++j] = '<td><a href="#" onclick="editAccident(' + data[key]["id"] + ')">Edit 🖉</a> ' +
                 //     ' <a href="#" onclick="deleteAccident(' + data[key]["id"] + ", '" + data[key]["destination"] + "'" + ')">Delete ✘</a> </td>';
                 r[++j] = '</tr>';
